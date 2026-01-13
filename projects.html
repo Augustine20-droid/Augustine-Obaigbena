@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Projects Archive - Augustine Obaigbena">
+    <title>Projects Archive | Augustine Obaigbena</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Projects Archive Specific Styles */
+        .projects-archive {
+            min-height: 100vh;
+            background: var(--bg-primary);
+            padding-top: 120px;
+            padding-bottom: 4rem;
+        }
+
+        .archive-header {
+            margin-bottom: 4rem;
+        }
+
+        .archive-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .archive-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            line-height: 0.9;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .archive-title .red {
+            color: #4A90E2;
+        }
+
+        .projects-categories {
+            margin-top: 4rem;
+        }
+
+        .category-item {
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .category-item:hover {
+            padding-left: 1rem;
+        }
+
+        .category-item.active {
+            background: var(--bg-secondary);
+            padding-left: 1rem;
+            padding-right: 1rem;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .category-number {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            font-weight: 700;
+            margin-right: 2rem;
+        }
+
+        .category-item.active .category-number {
+            color: var(--primary-color);
+        }
+
+        .category-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            flex: 1;
+            transition: var(--transition);
+        }
+
+        .category-item.active .category-name {
+            color: var(--text-primary);
+        }
+
+        .category-count {
+            font-size: 0.875rem;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .category-item.active .category-count::before {
+            content: '• ';
+            margin-right: 0.5rem;
+        }
+
+        .projects-list {
+            display: none;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .projects-list.active {
+            display: grid;
+        }
+
+        .project-item {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .project-item:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        .project-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .project-info {
+            padding: 1.5rem;
+        }
+
+        .project-info h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-info p {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Back to Top Button */
+        .back-to-top-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 6rem;
+            padding-bottom: 4rem;
+        }
+
+        .back-to-top-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-muted);
+            transition: var(--transition);
+            padding: 1rem;
+        }
+
+        .back-to-top-btn i {
+            font-size: 2rem;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .back-to-top-btn span {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .back-to-top-btn:hover {
+            color: var(--primary-color);
+        }
+
+        .back-to-top-btn:hover i {
+            color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .archive-title {
+                font-size: 2.5rem;
+            }
+
+            .category-name {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h2>AUGUSTINE OBAIGBENA</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html#home" class="nav-link">Home</a></li>
+                <li><a href="index.html#about" class="nav-link">About</a></li>
+                <li><a href="index.html#education" class="nav-link">Education</a></li>
+                <li><a href="index.html#experience" class="nav-link">Experience</a></li>
+                <li><a href="index.html#projects" class="nav-link">Projects</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <i class="fas fa-sun"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Projects Archive Section -->
+    <section class="projects-archive">
+        <div class="container">
+            <div class="archive-header">
+                <span class="archive-label">PORTFOLIO</span>
+                <h1 class="archive-title">PROJECTS<br><span class="red">ARCHIVE</span></h1>
+            </div>
+
+            <div class="projects-categories">
+                <!-- All Works -->
+                <div class="category-item active" data-category="all">
+                    <span class="category-number">01</span>
+                    <h2 class="category-name">ALL WORKS</h2>
+                    <span class="category-count">13 PROJECTS</span>
+                </div>
+
+                <div class="projects-list active" id="all-projects">
+                    <div class="project-item">
+                        <img src="Ecommerce platform.jpg" alt="E-Commerce Platform">
+                        <div class="project-info">
+                            <h3>E-Commerce Platform</h3>
+                            <p>Full-stack e-commerce web application with user authentication, product catalog, and payment integration.</p>
+                        </div>
+                    </div>
+
+                    <div class="project-item">
+                        <img src="digital-marketing.jpg" alt="Digital Marketing">
+                        <div class="project-info">
+                            <h3>Digital Marketing</h3>
+                            <p>Comprehensive social media marketing campaigns for brand growth and engagement.</p>
+                        </div>
+                    </div>
+
+                    <div class="project-item">
+                        <img src="ai-coding.jpg" alt="AI Coding">
+                        <div class="project-info">
+                            <h3>AI Coding Assistant</h3>
+                            <p>Intelligent coding assistant powered by AI for automated code generation and debugging.</p>
+                        </div>
+                    </div>
+
+                    <div class="project-item">
+                        <img src="cga-web.jpeg" alt="Website Coding">
+                        <div class="project-info">
+                            <h3>CGA Website</h3>
+                            <p>Modern, responsive website with clean design and optimized performance.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Website Development -->
+                <div class="category-item" data-category="website">
+                    <span class="category-number">02</span>
+                    <h2 class="category-name">WEBSITE DEVELOPMENT</h2>
+                    <span class="category-count"></span>
+                </div>
+
+                <div class="projects-list" id="website-projects">
+                    <div class="project-item">
+                        <img src="Ecommerce platform.jpg" alt="E-Commerce Platform">
+                        <div class="project-info">
+                            <h3>E-Commerce Platform</h3>
+                            <p>Full-stack e-commerce solution with modern features.</p>
+                        </div>
+                    </div>
+
+                    <div class="project-item">
+                        <img src="cga-web.jpeg" alt="CGA Website">
+                        <div class="project-info">
+                            <h3>CGA Website</h3>
+                            <p>Corporate website with responsive design.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Apps -->
+                <div class="category-item" data-category="mobile">
+                    <span class="category-number">03</span>
+                    <h2 class="category-name">MOBILE APPS</h2>
+                    <span class="category-count"></span>
+                </div>
+
+                <div class="projects-list" id="mobile-projects">
+                    <div class="project-item">
+                        <div class="project-info">
+                            <h3>Coming Soon</h3>
+                            <p>Mobile app projects are currently in development.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tools -->
+                <div class="category-item" data-category="tools">
+                    <span class="category-number">04</span>
+                    <h2 class="category-name">TOOLS</h2>
+                    <span class="category-count"></span>
+                </div>
+
+                <div class="projects-list" id="tools-projects">
+                    <div class="project-item">
+                        <img src="tools.jpeg" alt="Developer Tools">
+                        <div class="project-info">
+                            <h3>Developer Stack</h3>
+                            <p>Cutting-edge AI and development tools for building intelligent applications and chatbots.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Back to Top Button -->
+                <div class="back-to-top-wrapper">
+                    <a href="#" class="back-to-top-btn">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>Back to Top</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+    <script>
+        // Category Toggle Functionality
+        const categoryItems = document.querySelectorAll('.category-item');
+        const projectLists = document.querySelectorAll('.projects-list');
+
+        categoryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const category = item.getAttribute('data-category');
+
+                // Remove active class from all items
+                categoryItems.forEach(cat => cat.classList.remove('active'));
+                projectLists.forEach(list => list.classList.remove('active'));
+
+                // Add active class to clicked item
+                item.classList.add('active');
+
+                // Show corresponding projects list
+                const projectList = document.getElementById(`${category}-projects`);
+                if (projectList) {
+                    projectList.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
